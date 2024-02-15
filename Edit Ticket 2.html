@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ticket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            width: 60%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button#backToHome {
+            background-color: #ccc;
+            color: #000;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button#backToHome:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Edit Ticket</h1>
+    </header>
+    
+    <main>
+        <form action="{{ url('/cliente/' . $ticket->ID_Tickets) }}" method="post" id="editTicketForm">
+            @csrf
+            @method('PUT')
+
+            <div>ID Ticket: {{ $ticket->ID_Tickets }}</div>
+            <div>Auxiliar de Soporte: {{ $ticket->auxiliar_Soporte ?? 'No asignado' }}</div>
+            <div>Fecha: {{ $ticket->fecha }}</div>
+            <div>Estatus: {{ $ticket->estatus }}</div>
+
+            <label for="Clasificacion">Clasificación</label>
+            <input type="text" name="Clasificacion" id="Clasificacion" value="{{ $ticket->Clasificacion }}" required>
+
+            <label for="Detalles">Detalles</label>
+            <textarea name="Detalles" id="Detalles" required>{{ $ticket->Detalles }}</textarea>
+
+            <input type="submit" value="Update Ticket">
+        </form>
+
+        <button id="backToHome">Back to Home</button>
+    </main>
+
+    <footer>
+        <script src="scripts.js"></script>
+    </footer>
+</body>
+</html>

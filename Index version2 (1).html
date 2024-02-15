@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tickets</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #content {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #search-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #search-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            max-width: 20px;
+            max-height: 20px;
+            margin-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+
+    <div id="search-form">
+        <form action="{{ url('/buscar-tickets') }}" method="GET">
+            @csrf
+            <input type="text" id="search-input" name="search" placeholder="Buscar tickets...">
+            <button type="submit" id="search-btn">Buscar</button>
+        </form>
+    </div>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Detalles</th>
+            <th>Clasificación</th>
+            <th>Auxiliar de Soporte</th>
+            <th>Fecha</th>
+            <th>Estatus</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($tickets as $ticket)
+        <tr>
+            <td>{{ $ticket->ID_Tickets }}</td>
+            <td>{{ $ticket->Detalles }}</td>
+            <td>{{ $ticket->Clasificacion }}</td>
+            <td>{{ $ticket->auxiliar_Soporte }}</td>
+            <td>{{ $ticket->fecha }}</td>
+            <td>{{ $ticket->estatus }}</td>
+            <td>
+                <!-- Botón Editar -->
+                <a href="{{ url('/cliente/' . $ticket->ID_Tickets . '/edit') }}">
+                    <img src="C:\Users\wycke\Downloads\boligrafo.png" alt="Editar Icono" />
+                    Editar
+                </a>
+            </td>
+            <td>
+                <!-- Formulario para eliminar -->
+                <form action="{{ url('/cliente/' . $ticket->ID_Tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">
+                        <img src="C:\Users\wycke\Downloads\cancelacion.png" alt="Eliminar Icono" />
+                        Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+    <button id="finalizarBtn">Finalizar</button>
+
+</div>
+
+</body>
+</html>
