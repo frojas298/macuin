@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Auth\CambiarContrasenaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('cliente', TicketController::class);
+Route::get('/changePassword', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContra');
+Route::post('/changePassword', [CambiarContrasenaController::class, 'store'])->name('cambiarContra');
 
 /*Route::get('/cliente', [TicketController::class, 'index']);
 Route::get('/cliente/createTicket', [TicketController::class, 'create']);

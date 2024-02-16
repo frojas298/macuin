@@ -104,7 +104,10 @@ class TicketController extends Controller
 
         // Verificar si el usuario autenticado puede eliminar este ticket
         if ($ticket->ID_Usuario != auth()->id()) {
-        return redirect('/cliente')->with('error', 'No tienes permiso para eliminar este ticket');
+            return redirect('/cliente')->with('error', 'No tienes permiso para eliminar este ticket');
+        }
+        if ($ticket->auxiliar_Soporte !== null) {
+            return redirect('/cliente')->with('error','No se puede eliminar este ticket');
         }
 
         $ticket->delete();
