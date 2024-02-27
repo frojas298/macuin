@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <form action="{{ url('/cliente/' . $ticket->ID_Tickets) }}" method="post">
     @csrf
     @method('PUT') <!-- Importante: Este método es para indicar que es una actualización -->
@@ -17,3 +20,4 @@
 
     <input type="submit" value="Actualizar">
 </form>
+@endsection

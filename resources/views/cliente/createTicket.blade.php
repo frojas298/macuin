@@ -1,6 +1,6 @@
-Seccion del cliente para crear tickets
+@extends('layouts.app')
 
-(Representacion de un form solo para verfificar que funciona)
+@section('content')
 <form action="{{ url('/cliente') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
 
@@ -12,3 +12,4 @@ Seccion del cliente para crear tickets
 
     <input type="submit" value="Agregar">
 </form>
+@endsection
