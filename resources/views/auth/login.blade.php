@@ -26,18 +26,6 @@
                         </div>
 
                         <div class="row mb-3">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Departamento</option>
-                                <option value="1">Compras</option>
-                                <option value="2">Contabilidad</option>
-                                <option value="3">Logística</option>
-                                <option value="4">Producción</option>
-                                <option value="5">Soporte</option>
-                                <option value="6">Ventas</option>
-                            </select>
-                        </div>
-
-                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">

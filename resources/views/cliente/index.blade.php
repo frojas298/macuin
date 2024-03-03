@@ -4,7 +4,9 @@
 <table border="1">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>Ticket</th>
+            <th>Autor</th>
+            <th>Departamento</th>
             <th>Detalles</th>
             <th>Clasificacion</th>
             <th>Auxiliar de Soporte</th>
@@ -18,6 +20,8 @@
         @foreach($tickets as $ticket)
         <tr>
             <td>{{ $ticket->ID_Tickets }}</td>
+            <td>{{ $ticket->ID_Usuario }}</td>
+            <td>{{ $ticket->ID_Departamento }}</td>
             <td>{{ $ticket->Detalles }}</td>
             <td>{{ $ticket->Clasificacion }}</td>
             <td>{{ $ticket->auxiliar_Soporte }}</td>

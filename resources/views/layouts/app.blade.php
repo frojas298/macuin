@@ -66,6 +66,7 @@
                 Administrar perfil
             </a>
             <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
+                <a class="dropdown-item" href="{{ url('/perfil') }}">Modificar datos</a>
                 <a class="dropdown-item" href="{{ route('vistaCambioContra') }}">Cambiar contraseña</a>
             </div>
         </li>

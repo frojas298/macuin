@@ -15,7 +15,7 @@ class TicketController extends Controller
     {
         // Recuperar solo los tickets del usuario autenticado
         $tickets = Ticket::where('ID_Usuario', Auth::id())
-        ->get(['ID_Tickets', 'Detalles','Clasificacion', 'auxiliar_Soporte', 'fecha', 'estatus']);
+        ->get(['ID_Tickets','ID_Usuario','ID_Departamento' , 'Detalles','Clasificacion', 'auxiliar_Soporte', 'fecha', 'estatus']);
 
         // Pasar los tickets a la vista
         return view('cliente.index', compact('tickets'));
