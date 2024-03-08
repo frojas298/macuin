@@ -14,7 +14,13 @@ class CambiarContrasenaController extends Controller
      */
     public function index()
     {
-        return view('Auth.cambiarpass');
+        if (auth()->user()->Rol === 'Jefe') {
+            return view('Auth.cambiarpassJefe');
+        } elseif (auth()->user()->Rol === 'Auxiliar') {
+            return view('Auth.cambiarpassAux');
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            return view('Auth.cambiarpass');
+        }
     }
    
 

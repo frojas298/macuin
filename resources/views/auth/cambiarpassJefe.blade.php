@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appJefe')
 
 @section('content')
 @if(session('success'))
@@ -22,7 +22,7 @@
                 <div class="card-header">{{ __('Cambiar Contraseña') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('cambiarContra') }}">
+                    <form method="POST" action="{{ route('cambiarContraJefe') }}" onsubmit="showSpinners()">
                         @csrf
                         
                         <!-- Contraseña actual -->

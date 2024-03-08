@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appJefe')
 
 @section('content')
 <table border="1">
@@ -19,21 +19,21 @@
     <tbody>
         @foreach($tickets as $ticket)
         <tr>
-            <td>{{ $ticket->ID_tickets }}</td>
-            <td>{{ $ticket->Autor }}</td>
-            <td>{{ $ticket->departamento }}</td>
+            <td>{{ $ticket->ID_Tickets }}</td>
+            <td>{{ $ticket->ID_Usuario }}</td>
+            <td>{{ $ticket->ID_Departamento }}</td>
             <td>{{ $ticket->Detalles }}</td>
             <td>{{ $ticket->Clasificacion }}</td>
-            <td>{{ $ticket->auxiliarSoporte }}</td>
+            <td>{{ $ticket->auxiliar_Soporte }}</td>
             <td>{{ $ticket->fecha }}</td>
             <td>{{ $ticket->estatus }}</td>
             <td>
                 <!-- Botón Editar -->
-                <a href="{{ url('/cliente/' . $ticket->ID_tickets . '/edit') }}">Editar</a>
+                <a href="{{ url('/jefe/' . $ticket->ID_Tickets . '/edit') }}">Editar</a>
             </td>
             <td>
                 <!-- Formulario para eliminar -->
-                <form action="{{ url('/cliente/' . $ticket->ID_tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
+                <form action="{{ url('/jefe/' . $ticket->ID_Tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Eliminar</button>

@@ -20,7 +20,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/cliente') }}">
+                <a class="navbar-brand" onclick="showSpinners()" href="{{ url('/jefe') }}">
                     {{ config('app.name', 'Macuin Dashboards') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -42,12 +42,6 @@
                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
             </li>
         @endif
-
-        <!--@if (Route::has('register'))
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-            </li>
-        @endif -->
     @else
         <!-- Tickets Dropdown -->
         <li class="nav-item dropdown">
@@ -55,8 +49,19 @@
                 Tickets
             </a>
             <div class="dropdown-menu" aria-labelledby="ticketsDropdown">
-                <a class="dropdown-item" href="{{ url('/cliente/create') }}">Crear</a>
-                <a class="dropdown-item" href="{{ url('/cliente') }}">Mis tickets</a>
+                <a class="dropdown-item" href="{{ url('/ticketJefe/create') }}">Crear</a>
+                <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/ticketJefe') }}">Consultar</a>
+            </div>
+        </li>
+
+        <!-- Usuarios Dropdown -->
+        <li class="nav-item dropdown">
+            <a id="usersDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Usuarios
+            </a>
+            <div class="dropdown-menu" aria-labelledby="usersDropdown">
+                <a class="dropdown-item" href="{{ route('register') }}">{{ __('Crear') }}</a>
+                <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/user') }}">Consultar</a>
             </div>
         </li>
 
@@ -66,12 +71,12 @@
                 Administrar perfil
             </a>
             <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
-                <a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>
-                <a class="dropdown-item" href="{{ route('vistaCambioContra') }}">Cambiar contraseña</a>
+                <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/perfilJefe') }}">Modificar datos</a>
+                <a class="dropdown-item" href="{{ route('vistaCambioContraJefe') }}">Cambiar contraseña</a>
             </div>
         </li>
 
-        <!-- User Account Dropdown -->
+        <!-- Sesion Dropdown -->
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->Nombre }}
@@ -79,7 +84,7 @@
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
+                   onclick="event.preventDefault(); showSpinners();
                                  document.getElementById('logout-form').submit();">
                     {{ __('Cerrar sesión') }}
                 </a>
@@ -100,7 +105,7 @@
             @yield('content')
         </main>
     </div>
-
+    
     <div id="spinnerContainer" style="display: none;" class="text-center">
         <div class="spinner-grow text-primary" role="status">
             <span class="visually-hidden">Loading...</span>

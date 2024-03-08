@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appJefe')
 
 @section('content')
 
@@ -14,7 +14,7 @@
     </div>
 @endif
 
-<form action="{{ url('/perfilCliente/' . $usuario->ID_Usuario) }}" method="post">
+<form action="{{ url('/perfilJefe/' . $usuario->ID_Usuario) }}" method="post" onsubmit="showSpinners()">
     @csrf
     @method('PUT') <!-- Importante: Este método es para indicar que es una actualización -->
 

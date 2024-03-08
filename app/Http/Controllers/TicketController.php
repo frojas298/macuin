@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\vistaTickets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,11 +15,18 @@ class TicketController extends Controller
     public function index()
     {
         // Recuperar solo los tickets del usuario autenticado
-        $tickets = Ticket::where('ID_Usuario', Auth::id())
-        ->get(['ID_Tickets','ID_Usuario','ID_Departamento' , 'Detalles','Clasificacion', 'auxiliar_Soporte', 'fecha', 'estatus']);
-
-        // Pasar los tickets a la vista
-        return view('cliente.index', compact('tickets'));
+        $tickets = vistaTickets::where('ID_Usuario', Auth::id())
+        ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
+        
+        // Pasar los tickets a la vista correspondiente
+        if (auth()->user()->Rol === 'Jefe') {
+            return view('ticketJefe.index', compact('tickets'));
+        } elseif (auth()->user()->Rol === 'Auxiliar'){
+            return view('auxiliar.index', compact('tickets'));
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            return view('cliente.index' , compact('tickets'));
+        }
+        
     }
 
     /**
@@ -27,7 +35,13 @@ class TicketController extends Controller
     public function create()
     {
         //
-        return view('cliente.createTicket');
+        if (auth()->user()->Rol === 'Jefe') {
+            return view('jefe.createTicket');
+        } elseif (auth()->user()->Rol === 'Auxiliar'){
+            return view('auxiliar.createTicket');
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            return view('cliente.createTicket');
+        }
     }
 
     /**
@@ -41,14 +55,20 @@ class TicketController extends Controller
 
         $datosTicket = array_merge($datos, [
             'ID_Usuario' => auth()->id(), // ID del usuario autenticado
-            'ID_Departamento' => auth()->user()->departamento,
             'auxiliar_Soporte' => null, // Valor de null hasta que el jefe lo asigne
             'fecha' => now(), // Fecha actual
             'estatus' => 'Abierto', // Establecer estatus inicial para el ticket
         ]);
 
         Ticket::insert($datosTicket);
-        return redirect('/cliente')->with('success', 'Ticket creado correctamente.');
+
+        if (auth()->user()->Rol === 'Jefe') {
+            return redirect('/jefe')->with('success', 'Ticket creado correctamente.');
+        } elseif (auth()->user()->Rol === 'Auxiliar'){
+            return redirect('/auxiliar')->with('success', 'Ticket creado correctamente.');
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            return redirect('/cliente')->with('success', 'Ticket creado correctamente.');
+        }
         //return response()->json($datosTicket);
     }
 
@@ -67,19 +87,24 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($ID_Tickets);
 
-        if ($ticket->auxiliar_Soporte !== null) {
-        return redirect('/cliente')->with('error', 'Este ticket ya está siendo atendido y no se puede editar.');
+        
+        if (auth()->user()->Rol === 'Jefe') {
+            //PENDIENTE
+            return view('jefe.index', compact('ticket'));
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            if ($ticket->auxiliar_Soporte !== null) {
+                return redirect('/cliente')->with('error', 'Este ticket ya está siendo atendido y no se puede editar.');
+                }
+                return view('cliente.editTicket', compact('ticket'));
         }
-
-        return view('cliente.editTicket', compact('ticket'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $ID_Tickets)
+    public function update(Request $request, $ID_tickets)
     {
-        $ticket = Ticket::findOrFail($ID_Tickets);
+        $ticket = Ticket::findOrFail($ID_tickets);
 
         if ($ticket->auxiliar_Soporte !== null) {
             return redirect('/cliente')->with('error', 'Ups, No se puede editar este Ticket.');
@@ -98,9 +123,9 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($ID_Tickets)
+    public function destroy($ID_tickets)
     {
-        $ticket = Ticket::findOrFail($ID_Tickets);
+        $ticket = Ticket::findOrFail($ID_tickets);
 
         // Verificar si el usuario autenticado puede eliminar este ticket
         if ($ticket->ID_Usuario != auth()->id()) {

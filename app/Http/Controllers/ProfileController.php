@@ -14,8 +14,15 @@ class ProfileController extends Controller
         // Recuperar solo los datos del usuario autenticado
         $usuario = auth()->user();
 
-        // Pasar el usuario a la vista
-        return view('cliente.editProfile', compact('usuario'));
+        if (auth()->user()->Rol === 'Jefe') {
+            return view('jefe.editProfile', compact('usuario'));
+        } elseif (auth()->user()->Rol === 'Auxiliar') {
+            return view('auxiliar.editProfile', compact('usuario'));
+        } elseif (auth()->user()->Rol === 'Cliente') {
+            return view('cliente.editProfile', compact('usuario'));
+        }
+        
+        
     }
     
     public function update(Request $request, $ID_Usuario)
