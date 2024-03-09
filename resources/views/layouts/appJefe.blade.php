@@ -14,20 +14,12 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
 
-    <style>
-        body{
-            background-image: url(/images/Fondo.jpeg);
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-    </style>
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-custom shadow-sm">
             <div class="container">
                 <a class="navbar-brand" onclick="showSpinners()" href="{{ url('/jefe') }}">
                     <b>{{ config('app.name', 'Macuin Dashboards') }}</b>
@@ -135,6 +127,16 @@
             document.getElementById('spinnerContainer').style.display = 'block';
         }
     </script>
-
+    
+    <footer class="text-center text-lg-start bg-custom text-black">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <div class="me-5 d-none d-lg-block">
+            <span>© 2024 Macuin Dashboards. Todos los derechos reservados.</span>
+            </div>
+            <div>
+            <span>Hecho con ❤️ usando Laravel y Bootstrap.</span>
+            </div>
+        </section>
+    </footer>
 </body>
 </html>

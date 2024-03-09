@@ -1,5 +1,13 @@
+body{
+    background-image: url(/images/Fondo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .bg-custom {
-    background-color: #0c0c0c; /* Sustituye #nuevoColor por el código hexadecimal de tu color deseado */
+    background-image: url('/images/fondoCard.jpg'); /* Poner de fondo una imagen */
+    background-size: cover; /* Cubre por completo el area de la tarjeta */
+    background-position: center; /* Centra la imagen de fondo */
 }
 
 .card-body h1 {
@@ -33,7 +41,7 @@
     position: relative;
     top: 25px;
     left: 40px;
-    background-image: url('/images/fondoCard.jpg'); /* Poner de fondo una imagen */
+    background-image: url('/images/fondoCard2.jpg'); /* Poner de fondo una imagen */
     background-size: cover; /* Cubre por completo el area de la tarjeta */
     background-position: center; /* Centra la imagen de fondo */
 }
@@ -44,7 +52,7 @@
     position: relative;
     top: 75px;
     left: 40px;
-    background-image: url('/images/fondoCard.jpg'); /* Poner de fondo una imagen */
+    background-image: url('/images/fondoCard2.jpg'); /* Poner de fondo una imagen */
     background-size: cover; /* Cubre por completo el area de la tarjeta */
     background-position: center; /* Centra la imagen de fondo */
 }
@@ -55,6 +63,12 @@
     position: relative;
     top: -322px;
     left: 770px;
+    background-image: url('/images/fondoCard2.jpg'); /* Poner de fondo una imagen */
+    background-size: cover; /* Cubre por completo el area de la tarjeta */
+    background-position: center; /* Centra la imagen de fondo */
+}
+
+.cardElement{
     background-image: url('/images/fondoCard.jpg'); /* Poner de fondo una imagen */
     background-size: cover; /* Cubre por completo el area de la tarjeta */
     background-position: center; /* Centra la imagen de fondo */

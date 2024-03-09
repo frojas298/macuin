@@ -59,7 +59,7 @@
   </div>
   <div class="card-body d-flex flex-wrap">
     
-    <div class="card mb-3 me-2" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img src="{{ asset('images/ticketNoAsignado.png') }}" class="img-fluid rounded-start" alt="...">
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <div class="card mb-3 me-2" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img src="{{ asset('images/ticketAsignado.png') }}" class="img-fluid rounded-start" alt="...">
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <div class="card mb-3 me-2" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img src="{{ asset('images/ticketFinalizado.png') }}" class="img-fluid rounded-start" alt="...">
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <div class="card mb-3 me-2" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img src="{{ asset('images/numUsuarios.png') }}" class="img-fluid rounded-start" alt="...">
@@ -115,7 +115,7 @@
       </div>
     </div>
 
-    <div class="card mb-3 me-2" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img src="{{ asset('images/departamento.png') }}" class="img-fluid rounded-start" alt="...">
