@@ -19,12 +19,12 @@
     <tbody>
         @foreach($tickets as $ticket)
         <tr>
-            <td>{{ $ticket->ID_Tickets }}</td>
-            <td>{{ $ticket->ID_Usuario }}</td>
-            <td>{{ $ticket->ID_Departamento }}</td>
+            <td>{{ $ticket->ID_tickets }}</td>
+            <td>{{ $ticket->Autor }}</td>
+            <td>{{ $ticket->departamento }}</td>
             <td>{{ $ticket->Detalles }}</td>
             <td>{{ $ticket->Clasificacion }}</td>
-            <td>{{ $ticket->auxiliar_Soporte }}</td>
+            <td>{{ $ticket->auxiliarSoporte }}</td>
             <td>{{ $ticket->fecha }}</td>
             <td>{{ $ticket->estatus }}</td>
             <td>
@@ -33,7 +33,7 @@
             </td>
             <td>
                 <!-- Formulario para eliminar -->
-                <form action="{{ url('/jefe/' . $ticket->ID_Tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
+                <form action="{{ url('/ticketJefe/' . $ticket->ID_tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Eliminar</button>

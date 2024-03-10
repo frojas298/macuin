@@ -13,6 +13,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jefe/showUsers.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -61,7 +62,7 @@
                 Usuarios
             </a>
             <div class="dropdown-menu" aria-labelledby="usersDropdown">
-                <a class="dropdown-item" href="{{ route('register') }}">{{ __('Crear') }}</a>
+                <a class="dropdown-item" href="{{ url('/user/create') }}">{{ __('Crear') }}</a>
                 <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/user') }}">Consultar</a>
             </div>
         </li>
@@ -127,16 +128,5 @@
             document.getElementById('spinnerContainer').style.display = 'block';
         }
     </script>
-    
-    <footer class="text-center text-lg-start bg-custom text-black">
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <div class="me-5 d-none d-lg-block">
-            <span>© 2024 Macuin Dashboards. Todos los derechos reservados.</span>
-            </div>
-            <div>
-            <span>Hecho con ❤️ usando Laravel y Bootstrap.</span>
-            </div>
-        </section>
-    </footer>
 </body>
 </html>

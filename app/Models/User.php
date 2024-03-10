@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    protected $table = 'Usuarios'; 
+    protected $table = 'usuarios'; 
     protected $primaryKey = 'ID_Usuario'; 
 
     protected $fillable = [
@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-    // Sobreescribe el método getAuthPassword para usar 'contrasena' como tu contraseña
+    // Sobreescribe el método getAuthPassword para usar 'contrasena' como contraseña
     public function getAuthPassword()
     {
         return $this->contrasena;

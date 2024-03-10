@@ -13,17 +13,21 @@ class TicketController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        // Recuperar solo los tickets del usuario autenticado
-        $tickets = vistaTickets::where('ID_Usuario', Auth::id())
-        ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
-        
+    {     
         // Pasar los tickets a la vista correspondiente
         if (auth()->user()->Rol === 'Jefe') {
-            return view('ticketJefe.index', compact('tickets'));
+            $tickets = vistaTickets::orderBy('ID_tickets', 'asc')
+            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
+            return view('jefe.showTickets', compact('tickets'));
         } elseif (auth()->user()->Rol === 'Auxiliar'){
+            // Recuperar solo los tickets del usuario autenticado
+            $tickets = vistaTickets::where('ID_Usuario', Auth::id())
+            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
             return view('auxiliar.index', compact('tickets'));
         } elseif (auth()->user()->Rol === 'Cliente') {
+            // Recuperar solo los tickets del usuario autenticado
+            $tickets = vistaTickets::where('ID_Usuario', Auth::id())
+            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
             return view('cliente.index' , compact('tickets'));
         }
         
