@@ -129,6 +129,61 @@
       </div>
     </div>
 
+    <a href="{{ route('imprimirTickets') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Imprimir tickets</h4>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="{{ route('imprimirTicketsDepartamentos') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Imprimir tickets por departamentos</h4>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Imprimir ticket por auxuliar</h4>
+          </div>
+        </div>
+      </div>
+    </a>
+    <form action="{{ route('imprimirTicketsFecha') }}" method="POST" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      @csrf
+      <div class="row g-0">
+          <div class="col-md-4 d-flex justify-content-center">
+              <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+          </div>
+          <div class="col-md-8">
+              <div class="card-body">
+                  <h4 class="card-title">Imprimir ticket por fecha</h4>
+              </div>
+              <input type="date" name="fechaInicio">
+              <input type="date" name="fechaFin">
+  
+              <input type="submit" value="Imprimir">
+          </div>
+      </div>
+    </form>
+  
+
   </div>
 </div>
 @endsection

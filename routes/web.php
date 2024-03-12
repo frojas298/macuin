@@ -35,6 +35,10 @@ Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::resource('perfilJefe', ProfileController::class);
     Route::get('/changePasswordJ', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraJefe');
     Route::post('/changePasswordJ', [CambiarContrasenaController::class, 'store'])->name('cambiarContraJefe');
+    Route::get('/imprimirTickets', [JefeController::class, 'imprimirTickets'])->name('imprimirTickets');
+    Route::get('/imprimirTicketsDepartamentos', [JefeController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
+    Route::get('/imprimirTicketsAuxiliar', [JefeController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
+    Route::post('/imprimirTicketsFecha', [JefeController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {
