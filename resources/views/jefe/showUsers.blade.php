@@ -400,9 +400,7 @@
             document.getElementById('email').value = email;
             document.getElementById('departamento').value = departamento;
             document.getElementById('Rol').value = rol;
-            
-            // Abre el modal manualmente si es necesario
-            // Por ejemplo, si estás usando Bootstrap, puedes hacer algo como:
+
             var myModal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
             myModal.show();
             });

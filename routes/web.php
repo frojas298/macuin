@@ -31,6 +31,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('jefe', JefeController::class);
+    Route::post('/tickets/asignar/{ticket}', [TicketController::class, 'asignarAuxiliar'])->name('asignarAuxiliar');
     Route::resource('ticketJefe', TicketController::class);
     Route::resource('perfilJefe', ProfileController::class);
     Route::get('/changePasswordJ', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraJefe');

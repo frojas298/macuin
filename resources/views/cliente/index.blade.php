@@ -32,11 +32,11 @@
                 <a href="{{ url('/cliente/' . $ticket->ID_tickets . '/edit') }}">Editar</a>
             </td>
             <td>
-                <!-- Formulario para eliminar -->
-                <form action="{{ url('/cliente/' . $ticket->ID_tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ticket?');">
+                <!-- Formulario para cancelar -->
+                <form action="{{ url('/cliente/' . $ticket->ID_tickets) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas cancelar este ticket?');">
                     @csrf
-                    @method('DELETE')
-                    <button type="submit">Eliminar</button>
+                    @method('DELETE') <!-- Mantén el método DELETE si estás utilizando la misma ruta y controlador -->
+                    <button type="submit">Cancelar Ticket</button>
                 </form>
             </td>
         </tr>

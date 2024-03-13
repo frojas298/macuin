@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use App\Models\vistaTickets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -16,9 +17,32 @@ class TicketController extends Controller
     {     
         // Pasar los tickets a la vista correspondiente
         if (auth()->user()->Rol === 'Jefe') {
-            $tickets = vistaTickets::orderBy('ID_tickets', 'asc')
-            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
-            return view('jefe.showTickets', compact('tickets'));
+            $ticketsEP = DB::table('vistatickets')
+                     ->where ('estatus', 'En Proceso')
+                     ->get();
+            
+            $ticketsA = DB::table('vistatickets')
+                     ->where ('estatus', 'Asignado')
+                     ->get();
+
+            $ticketsC = DB::table('vistatickets')
+                     ->where ('estatus', 'Completado')
+                     ->get();
+
+            $ticketsNS = DB::table('vistatickets')
+                     ->where ('estatus', 'No Solucionado')
+                     ->get();
+            
+            $ticketsCC = DB::table('vistatickets')
+                     ->where ('estatus', 'Cancelado')
+                     ->get();
+
+            $auxiliar = DB::table('vistausuarios')
+                     ->where ('departamento', 'Soporte')
+                     ->where ('Rol', 'Auxiliar')
+                     ->get();
+
+            return view('jefe.showTickets', compact('ticketsEP', 'ticketsA', 'ticketsC', 'ticketsNS', 'ticketsCC', 'auxiliar'));
         } elseif (auth()->user()->Rol === 'Auxiliar'){
             // Recuperar solo los tickets del usuario autenticado
             $tickets = vistaTickets::where('ID_Usuario', Auth::id())
@@ -61,7 +85,7 @@ class TicketController extends Controller
             'ID_Usuario' => auth()->id(), // ID del usuario autenticado
             'auxiliar_Soporte' => null, // Valor de null hasta que el jefe lo asigne
             'fecha' => now(), // Fecha actual
-            'estatus' => 'Abierto', // Establecer estatus inicial para el ticket
+            'estatus' => 'En Proceso', // Establecer estatus inicial para el ticket
         ]);
 
         Ticket::insert($datosTicket);
@@ -138,8 +162,20 @@ class TicketController extends Controller
         if ($ticket->auxiliar_Soporte !== null) {
             return redirect('/cliente')->with('error','No se puede eliminar este ticket');
         }
+        
+        $ticket->estatus = 'Cancelado'; // Asume que 'Cancelado' es un valor válido para tu columna de estatus
+        $ticket->save();
 
-        $ticket->delete();
-        return redirect('/cliente')->with('success', 'Ticket eliminado correctamente');
+        return redirect()->back()->with('status', 'Ticket cancelado con éxito.');
+    }
+
+    public function asignarAuxiliar(Request $request, $ID_tickets)
+    {
+        $ticket = Ticket::findOrFail($ID_tickets);
+        $ticket->auxiliar_Soporte = $request->auxiliar_id;
+        $ticket->estatus = 'Asignado';
+        $ticket->save();
+
+        return back()->with('success', 'Auxiliar asignado correctamente.');
     }
 }

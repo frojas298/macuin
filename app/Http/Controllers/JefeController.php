@@ -26,7 +26,7 @@ class JefeController extends Controller
 
         // Obtener el conteo de tickets finalizadoos
         $ticketsFinalizados = DB::table('vistatickets')
-                              ->where('estatus','Finalizado')
+                              ->where('estatus','Completado')
                               ->count();
 
         // Obtener el conteo de usuarios
