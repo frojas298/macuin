@@ -49,13 +49,35 @@ class TicketController extends Controller
             ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
             return view('auxiliar.index', compact('tickets'));
         } elseif (auth()->user()->Rol === 'Cliente') {
-            // Recuperar solo los tickets del usuario autenticado
-            $tickets = vistaTickets::where('ID_Usuario', Auth::id())
-            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
-            return view('cliente.index' , compact('tickets'));
-        }
-        
-    }
+    // Obtener el conteo de tickets no asignados
+            $ticketsNoAsignados = DB::table('vistatickets')
+            ->whereNull('auxiliarSoporte')
+            ->count();
+
+            // Obtener el conteo de tickets asignados
+            $ticketsAsignados = DB::table('vistatickets')
+            ->whereNotNull('auxiliarSoporte')
+            ->count();
+
+            // Obtener el conteo de tickets finalizadoos
+            $ticketsFinalizados = DB::table('vistatickets')
+            ->where('estatus','Finalizado')
+            ->count();
+
+            // Obtener el conteo de usuarios
+            $usuarios = DB::table('vistausuarios')
+            ->count();
+
+            // Obtener el conteo de usuarios
+            $departamentos = DB::table('departamentos')
+            ->count();
+
+
+            // Pasar todos los conteos a la vista
+            return view('cliente.index', compact('ticketsNoAsignados', 'ticketsAsignados', 'ticketsFinalizados', 'usuarios', 'departamentos'));
+                    }
+                    
+                }
 
     /**
      * Show the form for creating a new resource.

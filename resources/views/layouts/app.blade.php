@@ -10,10 +10,10 @@
     <title>{{ config('app.name', 'Macuin Dashboards') }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link href="{{ asset('css/cliente/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jefe/showUsers.css') }}" rel="stylesheet">
 
 
     <!-- Scripts -->

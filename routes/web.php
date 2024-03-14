@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JefeController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -49,4 +50,6 @@ Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {
     Route::post('/changePassword', [CambiarContrasenaController::class, 'store'])->name('cambiarContra');
 
 });
+
+
 
