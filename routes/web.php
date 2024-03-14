@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JefeController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -31,17 +32,25 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('jefe', JefeController::class);
+    Route::post('/tickets/asignar/{ticket}', [TicketController::class, 'asignarAuxiliar'])->name('asignarAuxiliar');
     Route::resource('ticketJefe', TicketController::class);
     Route::resource('perfilJefe', ProfileController::class);
     Route::get('/changePasswordJ', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraJefe');
     Route::post('/changePasswordJ', [CambiarContrasenaController::class, 'store'])->name('cambiarContraJefe');
+    Route::get('/imprimirTickets', [JefeController::class, 'imprimirTickets'])->name('imprimirTickets');
+    Route::get('/imprimirTicketsDepartamentos', [JefeController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
+    Route::get('/imprimirTicketsAuxiliar', [JefeController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
+    Route::post('/imprimirTicketsFecha', [JefeController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {
-    Route::resource('cliente', TicketController::class);
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('ticketCliente', TicketController::class);
     Route::resource('perfilCliente', ProfileController::class);
     Route::get('/changePassword', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContra');
     Route::post('/changePassword', [CambiarContrasenaController::class, 'store'])->name('cambiarContra');
 
 });
+
+
 

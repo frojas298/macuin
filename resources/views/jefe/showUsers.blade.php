@@ -280,7 +280,7 @@
                 <button type="button" class="btn-close custom-close-color" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editarUsuarioForm" method="post" enctype="multipart/form-data" onsubmit="showSpinners()">
+                <form id="editarUsuarioForm" method="post" class="was-validated" enctype="multipart/form-data" onsubmit="showSpinners()">
                 <input type="hidden" name="_method" value="PUT">
                 @csrf
                         
@@ -289,18 +289,16 @@
                         <label for="Nombre" class="col-md-4 col-form-label text-md-end">{{ __('Nombre Completo') }}</label>
                         <div class="col-md-6">
                             <input id="Nombre" type="text" class="form-control @error('name') is-invalid @enderror" name="Nombre" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <div class="invalid-feedback">
+                                    El Nombre Completo es requerido.
+                            </div>
                         </div>
                     </div>
                     <!-- Departamento -->
                     <div class="row mb-3">
                         <label for="departamento" class="col-md-4 col-form-label text-md-end">Departamento</label>
                         <div class="col-md-6">
-                            <select name="departamento" id="departamento" class="form-control" required>
+                            <select name="departamento" id="departamento" class="form-select" required>
                                 <option selected>Seleccione el Departamento del Usuario</option>
                                 <option value=1>Compras</option>
                                 <option value=2>Contabilidad</option>
@@ -309,6 +307,9 @@
                                 <option value=5>Ventas</option>
                                 <option value=6>Soporte</option>
                             </select>
+                            <div class="invalid-feedback">
+                                    El Departamento es requerido.
+                            </div>
                         </div>
                     </div>
                     <!-- Rol -->
@@ -321,6 +322,9 @@
                                 <option value="Auxiliar">Auxiliar de Soporte</option>
                                 <option value="Cliente">Cliente</option>
                             </select>
+                            <div class="invalid-feedback">
+                                    El Rol del usuario es requerido.
+                            </div>
                         </div>
                     </div>
                     <!-- Email -->
@@ -328,11 +332,9 @@
                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <div class="invalid-feedback">
+                                    El Correo Electrónico es requerido.
+                            </div>
                         </div>
                     </div>
 
@@ -343,7 +345,27 @@
                             </button>
                         </div>
                     </div>
-            </form>
+                </form>
+                <div id="spinnerContainer" style="display: none;" class="text-center">
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <script>
+                    function showSpinners() {
+                        document.getElementById('spinnerContainer').style.display = 'block';
+                    }
+                </script>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -362,6 +384,7 @@
             </div>
             <div class="modal-body">
                 <p id="textoConfirmacion">¿Seguro que deseas eliminar a <strong id="nombreUsuario">Nombre de Usuario </strong>?</p>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -400,9 +423,9 @@
             document.getElementById('email').value = email;
             document.getElementById('departamento').value = departamento;
             document.getElementById('Rol').value = rol;
-            
-            // Abre el modal manualmente si es necesario
-            // Por ejemplo, si estás usando Bootstrap, puedes hacer algo como:
+
+            actualizarEstadoRol();
+
             var myModal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
             myModal.show();
             });
@@ -425,6 +448,20 @@
                 myModal.show();
             });
         });
+
+        //Manejo del Select Rol de usuarios        
+        function actualizarEstadoRol() {
+            const departamentoSelect = document.getElementById('departamento');
+            const rolSelect = document.getElementById('Rol');
+            if (departamentoSelect.value != '6') {
+                rolSelect.value = 'Cliente'; 
+                rolSelect.setAttribute('disabled', true); 
+            } else {
+                rolSelect.removeAttribute('disabled'); 
+            }
+        }
+        const departamentoSelect = document.getElementById('departamento');
+        departamentoSelect.addEventListener('change', actualizarEstadoRol);
     });    
 </script>
 @endsection
