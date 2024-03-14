@@ -1,0 +1,38 @@
+body {
+    background-color: #0a3d62 !important; /* Un azul marino como fondo de la página */
+}
+
+.container2 {
+    padding-top: 50px !important; /* Ajuste para darle un poco de espacio desde la parte superior */
+}
+
+.card {
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Sombras suaves */
+    background-color: #f7f7f7 !important; /* Un fondo claro para el formulario, puedes ajustar según tu esquema de color */
+}
+
+.card-header {
+    background-color: #c0c0c0 !important; /* Color plateado para combinar con la navbar */
+    color: #333 !important;
+    border-bottom: none !important;
+    text-align: center !important;
+    font-size: 24px !important; /* Aumenta el tamaño de la fuente para el encabezado */
+}
+
+.btn-primary {
+    background-color: #3490dc !important; /* Ajusta al color que prefieras */
+    border: none !important;
+    border-radius: 20px !important; /* Botones con bordes redondeados */
+    padding: 10px 20px !important; /* Más espacio interior en los botones */
+}
+
+.form-control {
+    border-radius: 20px !important; /* Inputs con bordes redondeados */
+    border: 1px solid #ccc !important;
+}
+
+.invalid-feedback {
+    color: #e3342f !important; /* Un color que destaque para los errores, ajusta según necesidad */
+}
