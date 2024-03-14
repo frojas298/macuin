@@ -51,6 +51,7 @@
                         </div>
 
                         <!-- Rol -->
+                        <input type="hidden" id="RolHidden" name="Rol">
                         <div class="row mb-3">
                             <label for="Rol" class="col-md-4 col-form-label text-md-end">Rol</label>
                             <div class="col-md-6">
@@ -118,15 +119,21 @@
         document.addEventListener('DOMContentLoaded', function () {
             const departamentoSelect = document.getElementById('departamento');
             const rolSelect = document.getElementById('Rol');
+            const rolHidden = document.getElementById('RolHidden');
 
             departamentoSelect.addEventListener('change', function () {
                 // Si el departamento no es Soporte (asumiendo que el valor 6 es Soporte)
                 if (this.value != 6) {
                     rolSelect.value = 'Cliente'; // Cambia el rol a Cliente
+                    rolHidden.value = 'Cliente';
                     rolSelect.setAttribute('disabled', true); // Deshabilita el select de Rol
                 } else {
                     rolSelect.removeAttribute('disabled'); // Habilita el select de Rol si es Soporte
+                    rolHidden.value = rolSelect.value;
                 }
+            });
+            rolSelect.addEventListener('change', function () {
+                rolHidden.value = this.value;
             });
         });
     </script>

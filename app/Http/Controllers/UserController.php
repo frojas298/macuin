@@ -61,6 +61,9 @@ class UserController extends Controller
         $messages = [
             'contrasena.confirmed' => 'Las contraseñas no coinciden.',
         ];
+        if ($request->departamento != 6) {
+            $request->merge(['Rol' => 'Cliente']);
+        }
 
         //Validar los datos del fromulario
         $validarDatos = $request->validate([
@@ -112,6 +115,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($ID_Usuario);
 
+        if ($request->departamento != 6) {
+            // Forzar el rol a Cliente
+            $request->merge(['Rol' => 'Cliente']);
+        }
         // Actualizar usuario
         $actualizado = $user->update([
             'Nombre' => $request->Nombre,
