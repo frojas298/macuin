@@ -99,6 +99,12 @@
             </div>
         </nav>
 
+        @if(session('mensaje'))
+        <div class="alert alert-{{ session('mensaje')['tipo'] == 'success' ? 'success' : 'danger' }}">
+            {{ session('mensaje')['texto'] }}
+        </div>
+        @endif
+        
         <main class="py-4">
             @yield('content')
         </main>

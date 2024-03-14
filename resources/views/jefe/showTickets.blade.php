@@ -43,7 +43,7 @@
                     <td>{{ $ep->Detalles }}</td>
                     <td>{{ $ep->Clasificacion }}</td>
                     <td>{{ $ep->fecha }}</td>
-                    <td>{{ $ep->estatus }}</td>
+                    <td><span class="estado en-proceso">{{ $ep->estatus }}</span></td>
                     <td>Comentarios</td>
                     <td>
                         <form action="{{ route('asignarAuxiliar', $ep->ID_tickets) }}" method="POST">
@@ -87,7 +87,7 @@
                         <td>{{ $ticketA->Detalles }}</td>
                         <td>{{ $ticketA->Clasificacion }}</td>
                         <td>{{ $ticketA->fecha }}</td>
-                        <td>{{ $ticketA->estatus }}</td>
+                        <td><span class="estado asignado">{{ $ticketA->estatus }}</span></td>
                         <td>Comentarios</td>
                         <td>
                             <form action="{{ route('asignarAuxiliar', $ticketA->ID_tickets) }}" method="POST">
@@ -130,7 +130,7 @@
                         <td>{{ $ticketC->Detalles }}</td>
                         <td>{{ $ticketC->Clasificacion }}</td>
                         <td>{{ $ticketC->fecha }}</td>
-                        <td>{{ $ticketC->estatus }}</td>
+                        <td><span class="estado completado">{{ $ticketC->estatus }}</span></td>
                         <td>Comentarios</td>
                         <td>{{ $ticketC->auxiliarSoporte }}</td>
                     </tr>
@@ -163,7 +163,7 @@
                         <td>{{ $ticketNS->Detalles }}</td>
                         <td>{{ $ticketNS->Clasificacion }}</td>
                         <td>{{ $ticketNS->fecha }}</td>
-                        <td>{{ $ticketNS->estatus }}</td>
+                        <td><span class="estado nosolucionado">{{ $ticketNS->estatus }}</span></td>
                         <td>Comentarios</td>
                         <td>{{ $ticketNS->auxiliarSoporte }}</td>
                     </tr>
@@ -196,7 +196,7 @@
                         <td>{{ $tCC->Detalles }}</td>
                         <td>{{ $tCC->Clasificacion }}</td>
                         <td>{{ $tCC->fecha }}</td>
-                        <td>{{ $tCC->estatus }}</td>
+                        <td><span class="estado cancelado">{{ $tCC->estatus }}</span></td>
                         <td>Comentarios</td>
                         <td>{{ $tCC->auxiliarSoporte }}</td>
                     </tr>

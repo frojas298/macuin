@@ -22,15 +22,17 @@
                 <div class="card-header">{{ __('Cambiar Contraseña') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('cambiarContraJefe') }}" onsubmit="showSpinners()">
+                    <form method="POST" action="{{ route('cambiarContraJefe') }}" class="was-validated" onsubmit="showSpinners()">
                         @csrf
                         
                         <!-- Contraseña actual -->
                         <div class="form-group row">
                             <label for="contraActual" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña Actual') }}</label>
-
                             <div class="col-md-6">
-                                <input id="contraActual" type="password" class="form-control" name="contraActual" required>
+                                <input id="contraActual" type="password" class="form-control" minLength="8" name="contraActual" required>
+                                <div class="invalid-feedback">
+                                    La Contraseña actual es requerida.
+                                </div>
                             </div>
                         </div>
 
@@ -39,7 +41,10 @@
                             <label for="nuevaContra" class="col-md-4 col-form-label text-md-right">{{ __('Nueva Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nuevaContra" type="password" class="form-control" name="nuevaContra" required>
+                                <input id="nuevaContra" type="password" class="form-control" minLength="8" name="nuevaContra" required>
+                                <div class="invalid-feedback">
+                                    La Nueva Contraseña es requerida. Debe contener mínimo 8 caracteres.
+                                </div>
                             </div>
                         </div>
 
@@ -48,7 +53,10 @@
                             <label for="nuevaContra_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar nueva contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nuevaContra_confirmation" type="password" class="form-control" name="nuevaContra_confirmation" required>
+                                <input id="nuevaContra_confirmation" type="password" class="form-control" minLength="8" name="nuevaContra_confirmation" required>
+                                <div class="invalid-feedback">
+                                    La Confirmación de Contraseña es requerida.
+                                </div>
                             </div>
                         </div>
 

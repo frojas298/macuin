@@ -1,0 +1,27 @@
+.estado {
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    display: inline-block;
+  }
+  
+.en-proceso {
+    background-color: gray;
+  }
+  
+.asignado {
+    background-color: blue;
+  }
+  
+.completado {
+    background-color: green;
+  }
+
+.nosolucionado{
+    background-color: orange;
+}
+
+.cancelado {
+    background-color: red;
+}
+  

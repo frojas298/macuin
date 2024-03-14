@@ -58,6 +58,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'contrasena.confirmed' => 'Las contraseñas no coinciden.',
+        ];
+
         //Validar los datos del fromulario
         $validarDatos = $request->validate([
             'Nombre' => 'required|string|max:200',
@@ -65,7 +69,7 @@ class UserController extends Controller
             'Rol' => 'required|string|max:10',
             'email' => 'required|string|email|max:80|unique:usuarios',
             'contrasena' => 'required|string|min:8|confirmed',
-        ]);
+        ], $messages);
 
         //Guardar el usuario
         $user = new User;
@@ -74,9 +78,15 @@ class UserController extends Controller
         $user->Rol = $validarDatos['Rol'];
         $user->email = $validarDatos['email'];
         $user->contrasena = Hash::make($validarDatos['contrasena']);
-        $user->save();
+        $registrado = $user->save();
 
-        return redirect('/jefe')->with('success', 'Usuario creado correctamente.');
+        if ($registrado) {
+            $mensaje = ['tipo' => 'success', 'texto' => 'Usuario creado correctamente.'];
+        } else {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Error al crear el Usuario. Por favor, intenta de nuevo.'];
+        }
+
+        return redirect('/jefe')->with('mensaje', $mensaje);
     }
 
     /**
@@ -103,14 +113,20 @@ class UserController extends Controller
         $user = User::findOrFail($ID_Usuario);
 
         // Actualizar usuario
-        $user->update([
+        $actualizado = $user->update([
             'Nombre' => $request->Nombre,
             'Rol' => $request->Rol,
             'email' => $request->email,
             'departamento' => $request->departamento,
         ]);
 
-        return redirect('/user')->with('success', 'Usuario actualizado correctamente.');
+        if ($actualizado) {
+            $mensaje = ['tipo' => 'success', 'texto' => 'Usuario modificado correctamente.'];
+        } else {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Error al modificar el Usuario. Por favor, intenta de nuevo.'];
+        }
+
+        return redirect('/user')->with('mensaje', $mensaje);
     }
 
     /**
@@ -121,7 +137,12 @@ class UserController extends Controller
         //Eliminar al usuario
         $user = User::findOrFail($ID_Usuario);
 
-        $user->delete();
-        return redirect('/user')->with('success', 'Usuario eliminado correctamente');
+        $eliminado = $user->delete();
+        if ($eliminado) {
+            $mensaje = ['tipo' => 'success', 'texto' => 'Usuario eliminado correctamente.'];
+        } else {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Error al eliminar el Usuario. Por favor, intenta de nuevo.'];
+        }
+        return redirect('/user')->with('mensaje', $mensaje);
     }
 }

@@ -14,6 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jefe/showUsers.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jefe/showTickets.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -51,7 +52,7 @@
                 Tickets
             </a>
             <div class="dropdown-menu" aria-labelledby="ticketsDropdown">
-                <a class="dropdown-item" href="{{ url('/ticketJefe/create') }}">Crear</a>
+                <!--<a class="dropdown-item" href="{{ url('/ticketJefe/create') }}">Crear</a>-->
                 <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/ticketJefe') }}">Consultar</a>
             </div>
         </li>
@@ -73,7 +74,7 @@
                 Administrar perfil
             </a>
             <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
-                <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/perfilJefe') }}">Modificar datos</a>
+                <!--<a class="dropdown-item" onclick="showSpinners()" href="{{ url('/perfilJefe') }}">Modificar datos</a>-->
                 <a class="dropdown-item" href="{{ route('vistaCambioContraJefe') }}">Cambiar contraseña</a>
             </div>
         </li>
@@ -102,7 +103,11 @@
                 </div>
             </div>
         </nav>
-
+        @if(session('mensaje'))
+            <div class="alert alert-{{ session('mensaje')['tipo'] == 'success' ? 'success' : 'danger' }}">
+                {{ session('mensaje')['texto'] }}
+            </div>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
