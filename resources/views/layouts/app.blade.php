@@ -13,7 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jefe/showUsers.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cliente/showUsers.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jefe/showTickets.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
 
 
     <!-- Scripts -->
@@ -58,8 +60,8 @@
                 Tickets
             </a>
             <div class="dropdown-menu" aria-labelledby="ticketsDropdown">
-                <a class="dropdown-item" href="{{ url('/cliente/create') }}">Crear</a>
-                <a class="dropdown-item" href="{{ url('/cliente') }}">Mis tickets</a>
+                <a class="dropdown-item" href="{{ url('/ticketCliente/create') }}">Crear</a>
+                <a class="dropdown-item" href="{{ url('/ticketCliente') }}">Mis tickets</a>
             </div>
         </li>
 
@@ -69,7 +71,7 @@
                 Administrar perfil
             </a>
             <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
-                <a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>
+                <!--<a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>-->
                 <a class="dropdown-item" href="{{ route('vistaCambioContra') }}">Cambiar contraseña</a>
             </div>
         </li>

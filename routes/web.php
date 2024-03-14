@@ -44,7 +44,8 @@ Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {
-    Route::resource('cliente', TicketController::class);
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('ticketCliente', TicketController::class);
     Route::resource('perfilCliente', ProfileController::class);
     Route::get('/changePassword', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContra');
     Route::post('/changePassword', [CambiarContrasenaController::class, 'store'])->name('cambiarContra');

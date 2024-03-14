@@ -49,35 +49,12 @@ class TicketController extends Controller
             ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
             return view('auxiliar.index', compact('tickets'));
         } elseif (auth()->user()->Rol === 'Cliente') {
-    // Obtener el conteo de tickets no asignados
-            $ticketsNoAsignados = DB::table('vistatickets')
-            ->whereNull('auxiliarSoporte')
-            ->count();
-
-            // Obtener el conteo de tickets asignados
-            $ticketsAsignados = DB::table('vistatickets')
-            ->whereNotNull('auxiliarSoporte')
-            ->count();
-
-            // Obtener el conteo de tickets finalizadoos
-            $ticketsFinalizados = DB::table('vistatickets')
-            ->where('estatus','Finalizado')
-            ->count();
-
-            // Obtener el conteo de usuarios
-            $usuarios = DB::table('vistausuarios')
-            ->count();
-
-            // Obtener el conteo de usuarios
-            $departamentos = DB::table('departamentos')
-            ->count();
-
-
-            // Pasar todos los conteos a la vista
-            return view('cliente.index', compact('ticketsNoAsignados', 'ticketsAsignados', 'ticketsFinalizados', 'usuarios', 'departamentos'));
-                    }
-                    
-                }
+            // Recuperar solo los tickets del usuario autenticado
+            $tickets = vistaTickets::where('ID_Usuario', Auth::id())
+            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
+            return view('cliente.showTicket' , compact('tickets'));
+        }            
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -148,12 +125,16 @@ class TicketController extends Controller
                 $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket ya está siendo atendido y no se puede editar.'];
                 return redirect('/ticketJefe')->with('mensaje', $mensaje);
                 }
-            return view('jefe.index', compact('ticket'));
-        } elseif (auth()->user()->Rol === 'Cliente') {
+                return view('jefe.index', compact('ticket'));
+            } elseif (auth()->user()->Rol === 'Cliente') {
             if ($ticket->auxiliar_Soporte !== null) {
                 $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket ya está siendo atendido y no se puede editar.'];
-                return redirect('/cliente')->with('mensaje', $mensaje);
+                return redirect('/ticketCliente')->with('mensaje', $mensaje);
                 }
+            if ($ticket->estatus == 'Cancelado') { // Corrección aquí
+                $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket está CANCELADO y no se puede editar'];
+                return redirect('/ticketCliente')->with('mensaje', $mensaje);
+            }
             return view('cliente.editTicket', compact('ticket'));
         }
     }
@@ -166,24 +147,29 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($ID_tickets);
 
         if ($ticket->auxiliar_Soporte !== null) {
-            $mensaje = ['tipo' => 'error', 'texto'=> 'Ya se ha asignado un auxiliar, por lo que no se puede editar este Ticket.'];
-            return redirect('/cliente')->with('mensaje', $mensaje);
-        } else {
-            // Actualizar los campos permitidoas
-            $actualizado = $ticket->update([
-                'Clasificacion' => $request->Clasificacion,
-                'Detalles' => $request->Detalles,
-                'fecha' => now(),
-            ]);
-
-            if ($actualizado) {
-                $mensaje = ['tipo' => 'success', 'texto'=> 'Ticket actualizado correctamente'];
-            }else{
-                $mensaje = ['tipo' => 'error', 'texto' => 'Error al editar el Ticket. Por favor, intenta de nuevo'];
-            }
-
-            return redirect('/cliente')->with('mensaje', $mensaje);
+            $mensaje = ['tipo' => 'error', 'texto' => 'Ya se ha asignado un auxiliar, por lo que no se puede editar este Ticket.'];
+            return redirect('/ticketCliente')->with('mensaje', $mensaje);
         }
+
+        if ($ticket->estatus == 'Cancelado') {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket está CANCELADO y no se puede editar'];
+            return redirect('/ticketCliente')->with('mensaje', $mensaje);
+        }
+
+        // Actualizar los campos permitidos
+        $actualizado = $ticket->update([
+            'Clasificacion' => $request->Clasificacion,
+            'Detalles' => $request->Detalles,
+            'fecha' => now(),
+        ]);
+
+        if ($actualizado) {
+            $mensaje = ['tipo' => 'success', 'texto' => 'Ticket actualizado correctamente'];
+        } else {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Error al editar el Ticket. Por favor, intenta de nuevo'];
+        }
+
+        return redirect('/ticketCliente')->with('mensaje', $mensaje);
     }
 
     /**
@@ -196,11 +182,11 @@ class TicketController extends Controller
         // Verificar si el usuario autenticado puede eliminar este ticket
         if ($ticket->ID_Usuario != auth()->id()) {
             $mensaje = ['tipo' => 'error', 'texto' => 'No tienes permiso para eliminar este ticket']; 
-            return redirect('/cliente')->with('mensaje', $mensaje);
+            return redirect('/ticketCliente')->with('mensaje', $mensaje);
         }
         if ($ticket->auxiliar_Soporte !== null) {
             $mensaje = ['tipo' => 'error', 'texto' => 'No se puede eliminar este ticket'];
-            return redirect('/cliente')->with('mensaje', $mensaje);
+            return redirect('/ticketCliente')->with('mensaje', $mensaje);
         }
         
         $ticket->estatus = 'Cancelado';

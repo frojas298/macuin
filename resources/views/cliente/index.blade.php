@@ -58,6 +58,20 @@
     <h3><b>Dashboard</b></h3>
   </div>
   <div class="card-body d-flex flex-wrap">
+  <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img src="{{ asset('images/ticketNoAsignado.png') }}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Tickets No Asignados</h4>
+            <p class="card-text"><b>{{ $ticketsNoAsignados }}</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
@@ -71,6 +85,7 @@
         </div>
       </div>
     </div>
+
     <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
