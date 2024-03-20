@@ -15,6 +15,7 @@
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jefe/showUsers.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jefe/showTickets.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

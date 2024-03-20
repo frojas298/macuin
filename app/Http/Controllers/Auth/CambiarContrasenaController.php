@@ -43,6 +43,12 @@ class CambiarContrasenaController extends Controller
         $user->contrasena = Hash::make($request->nuevaContra);
         $user->save();
 
-        return redirect()->back()->with('success', 'Ha cambiado su contraseña correctamente');
+        if (auth()->user()->Rol === 'Jefe') {
+            return redirect('/jefe')->with('success', 'Ha cambiado su contraseña correctamente');
+        }elseif (auth()->user()->Rol === 'Auxiliar') {
+            return redirect('/auxiliar')->with('success', 'Ha cambiado su contraseña correctamente');
+        }elseif (auth()->user()->Rol === 'Cliente') {
+            return redirect('/cliente')->with('success', 'Ha cambiado su contraseña correctamente');
+        }
     }    
 }
