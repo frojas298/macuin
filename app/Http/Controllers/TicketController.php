@@ -13,7 +13,7 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {     
         // Pasar los tickets a la vista correspondiente
         if (auth()->user()->Rol === 'Jefe') {
@@ -45,9 +45,38 @@ class TicketController extends Controller
             return view('jefe.showTickets', compact('ticketsEP', 'ticketsA', 'ticketsC', 'ticketsNS', 'ticketsCC', 'auxiliar'));
         } elseif (auth()->user()->Rol === 'Auxiliar'){
             // Recuperar solo los tickets del usuario autenticado
-            $tickets = vistaTickets::where('ID_Usuario', Auth::id())
-            ->get(['ID_tickets','Autor', 'Detalles','Clasificacion', 'auxiliarSoporte', 'departamento','fecha', 'estatus']);
-            return view('auxiliar.index', compact('tickets'));
+            $query = DB::table('vistatickets');
+
+            if ($request->has('estatus') && $request->estatus !=''){
+                $query->where('estatus', $request->estatus);
+            }
+            if ($request->has('departamento') && $request->departamento != '') {
+                $query->where('departamento', $request->departamento);
+            }
+            if ($request->has('fecha_inicio') && $request->fecha_inicio != '') {
+                $query->where('fecha', '>=', $request->fecha_inicio);
+            }
+            if ($request->has('fecha_fin') && $request->fecha_fin != '') {
+                $query->where('fecha', '<=', $request->fecha_fin);
+            }
+
+            $userId = Auth::id();
+
+            $query->where(function($query) use ($userId) {
+                $query->where(function($query) {
+                    $query->whereIn('estatus', ['En Proceso', 'Cancelado']);
+                })->orWhere(function($query) use ($userId) {
+                    $query->whereIn('estatus', ['Asignado', 'No Solucionado', 'Completado'])
+                        ->where('ID_Auxiliar', $userId);
+                });
+            });
+
+            $query->orderByRaw("FIELD(estatus, 'Asignado', 'Completado', 'No Solucionado', 'En Proceso', 'Cancelado')");
+
+            $tickets=$query->get();
+
+            return view('auxiliar.showTickets', compact('tickets'));
+            
         } elseif (auth()->user()->Rol === 'Cliente') {
             // Recuperar solo los tickets del usuario autenticado
             $tickets = vistaTickets::where('ID_Usuario', Auth::id())
@@ -131,7 +160,7 @@ class TicketController extends Controller
                 $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket ya está siendo atendido y no se puede editar.'];
                 return redirect('/ticketCliente')->with('mensaje', $mensaje);
                 }
-            if ($ticket->estatus == 'Cancelado') { // Corrección aquí
+            if ($ticket->estatus == 'Cancelado') {
                 $mensaje = ['tipo' => 'error', 'texto' => 'Este ticket está CANCELADO y no se puede editar'];
                 return redirect('/ticketCliente')->with('mensaje', $mensaje);
             }
