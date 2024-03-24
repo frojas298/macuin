@@ -16,6 +16,7 @@ class AuxiliarController extends Controller
     {        
         // Obtener el conteo de tickets asignados
         $ticketsAsignados = DB::table('vistatickets')
+                             ->where('estatus', 'Asignado')
                               ->where('ID_Auxiliar', Auth::id())
                               ->count();
 
@@ -25,7 +26,13 @@ class AuxiliarController extends Controller
                               ->where('ID_Auxiliar', Auth::id())
                               ->count();
 
+        // Obtener el conteo de tickets no solucionado
+        $ticketsNS = DB::table('vistatickets')
+                              ->where('estatus','No Solucionado')
+                              ->where('ID_Auxiliar', Auth::id())
+                              ->count();
+
         // Pasar todos los conteos a la vista
-        return view('auxiliar.index', compact('ticketsAsignados', 'ticketsFinalizados'));
+        return view('auxiliar.index', compact('ticketsAsignados', 'ticketsFinalizados', 'ticketsNS'));
     }
 }

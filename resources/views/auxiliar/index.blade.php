@@ -92,19 +92,21 @@
       </div>
     </div>
 
-    <!-- CORREGIR REPORTES PARA AUXILIAR -->
-    <a href="{{ route('imprimirTickets') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
-          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+          <img src="{{ asset('images/ticketNS.png') }}" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h4 class="card-title">Imprimir tickets</h4>
+            <h4 class="card-title">Tickets No Solucionados</h4>
+            <p class="card-text"><b>{{ $ticketsNS }}</b></p>
           </div>
         </div>
       </div>
-    </a>
+    </div>
+
+    <!-- CORREGIR REPORTES PARA AUXILIAR -->
     <a href="{{ route('imprimirTicketsDepartamentos') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">

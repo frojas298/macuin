@@ -7,6 +7,7 @@ use App\Models\vistaTickets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
@@ -48,16 +49,18 @@ class TicketController extends Controller
             $query = DB::table('vistatickets');
 
             if ($request->has('estatus') && $request->estatus !=''){
-                $query->where('estatus', $request->estatus);
+                $query->whereIn('estatus', $request->estatus);
             }
             if ($request->has('departamento') && $request->departamento != '') {
-                $query->where('departamento', $request->departamento);
+                $query->whereIn('departamento', $request->departamento);
             }
             if ($request->has('fecha_inicio') && $request->fecha_inicio != '') {
                 $query->where('fecha', '>=', $request->fecha_inicio);
             }
             if ($request->has('fecha_fin') && $request->fecha_fin != '') {
-                $query->where('fecha', '<=', $request->fecha_fin);
+                $fechaFinAjustada = new Carbon($request->fecha_fin);
+                $fechaFinAjustada->setTime(23, 59, 59);
+                $query->where('fecha', '<=', $fechaFinAjustada);
             }
 
             $userId = Auth::id();
@@ -73,7 +76,7 @@ class TicketController extends Controller
 
             $query->orderByRaw("FIELD(estatus, 'Asignado', 'Completado', 'No Solucionado', 'En Proceso', 'Cancelado')");
 
-            $tickets=$query->get();
+            $tickets=$query->paginate(5);
 
             return view('auxiliar.showTickets', compact('tickets'));
             
@@ -241,6 +244,24 @@ class TicketController extends Controller
             $mensaje = ['tipo' => 'success', 'texto' => 'Auxiliar asignado correctamente.'];
         } else {
             $mensaje = ['tipo' => 'error', 'texto' => 'Error al asignar un Auxiliar. Por favor, intenta de nuevo.'];
+        }
+        return back()->with('mensaje', $mensaje);
+    }
+
+    public function actualizarEstatus(Request $request, $ID_tickets)
+    {
+        $request->validate([
+            'nuevoEstatus' => 'required|string',
+        ]);
+
+        $ticket = Ticket::findOrFail($ID_tickets);
+        $ticket->estatus = $request->nuevoEstatus;
+        $actualizado = $ticket->save();
+
+        if ($actualizado) {
+            $mensaje = ['tipo' => 'success', 'texto' => 'Estatus actualizado correctamente.'];
+        } else {
+            $mensaje = ['tipo' => 'error', 'texto' => 'Error al actualizar el estatus. Por favor, intenta de nuevo.'];
         }
         return back()->with('mensaje', $mensaje);
     }

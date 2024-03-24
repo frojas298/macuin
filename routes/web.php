@@ -47,6 +47,7 @@ Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
 Route::middleware(['auth', 'checkrole:Auxiliar'])->group(function () {
     Route::resource('auxiliar', AuxiliarController::class);
     Route::resource('ticketAux', TicketController::class);
+    Route::post('ticketAux/{ID_tickets}/actualizarEstatus', [TicketController::class, 'actualizarEstatus'])->name('ticketAux.actualizarEstatus');
     Route::get('/changePasswordA', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraAux');
     Route::post('/changePasswordA', [CambiarContrasenaController::class, 'store'])->name('cambiarContraAux');
 });
