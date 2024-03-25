@@ -38,40 +38,46 @@
         }
     </style>
 </head>
-
 <body>
-    <h1>Reporte de Tickets</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Detalles</th>
-                <th>Clasificación</th>
-                <th>Departamento</th>
-                <th>Auxiliar de Soporte</th>
-                <th>Fecha</th>
-                <th>Estatus</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($tickets as $ticket)
+    @foreach ($tickets->groupBy('departamento') as $departamento => $ticketsPorDepartamento)
+        <h2>{{ $departamento }}</h2>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $ticket->ID_tickets }}</td>
-                    <td>{{ $ticket->Detalles }}</td>
-                    <td>{{ $ticket->Clasificacion }}</td>
-                    <td>{{ $ticket->departamento }}</td>
-                    <td>
-                        @if ($ticket->auxiliar_Soporte == null)
-                            Sin asignar
-                        @endif
-                        {{ $ticket->auxiliar_Soporte }}
-                    </td>
-                    <td>{{ $ticket->fecha }}</td>
-                    <td>{{ $ticket->estatus }}</td>
+                    <th>No. Ticket</th>
+                    <th>Autor</th>
+                    <th>Detalles</th>
+                    <th>Clasificación</th>
+                    <th>Departamento</th>
+                    <th>Auxiliar de Soporte</th>
+                    <th>Fecha</th>
+                    <th>Estatus</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($ticketsPorDepartamento as $ticket)
+                    <tr>
+                        <td>{{ $ticket->ID_tickets }}</td>
+                        <td>{{$ticket ->Nombre}}</td>
+                        <td>{{ $ticket->Detalles }}</td>
+                        <td>{{ $ticket->Clasificacion }}</td>
+                        <td>{{ $ticket->departamento }}</td>
+                        <td>
+                            @if ($ticket->auxiliar_Soporte == null)
+                                Sin asignar
+                            @else
+                                {{ $ticket->auxiliar_Soporte }}
+                            @endif
+                        </td>
+                        <td>{{ $ticket->fecha }}</td>
+                        <td>{{ $ticket->estatus }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
 </body>
+
+
 
 </html>

@@ -64,52 +64,63 @@ class JefeController extends Controller
         // Opción para mostrar el PDF en el navegador
         return $pdf->stream('ticket.pdf');
     }
-
     public function imprimirTicketsAuxiliar()
     {
-
-        $tickets = DB::table('tickets')->orderby('auxiliar_Soporte')->get();
-
-        foreach ($tickets as $ticket){
-            $ticket->usuario = DB::table('usuarios')->where('ID_Usuario', $ticket->ID_Usuario)->first();
-        }
-
+        $tickets = DB::table('tickets')
+        ->join('usuarios', 'tickets.ID_Usuario', '=', 'usuarios.ID_Usuario')
+        ->join('departamentos', 'usuarios.departamento', '=', 'departamentos.iddepartamentos')
+        ->leftJoin('usuarios as auxiliar', 'tickets.auxiliar_Soporte', '=', 'auxiliar.ID_Usuario')
+        ->select(
+            'tickets.*',
+            'usuarios.nombre as nombre_usuario',
+            'usuarios.departamento as departamento_usuario',
+            'auxiliar.nombre as nombre_auxiliar'
+        )
+        ->orderBy('usuarios.nombre')
+        ->where('tickets.auxiliar_Soporte', '!=', 'NULL')
+        ->get();
+    
         // Renderizar la vista del ticket en HTML
-        $html = view('PDF.reporteTickets', compact('tickets'))->render();
-
+        $html = view('PDF.reporteTicketsAuxiliar', compact('tickets'))->render();
+    
         // Generar el PDF con Dompdf
         $pdf = PDF::loadHTML($html);
-
+        
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('A4', 'landscape');  // Ajusta a formato A4 en orientación horizontal
+    
         // Opción para descargar el PDF
         return $pdf->download('ticket.pdf');
-
+    
         // Opción para mostrar el PDF en el navegador
         return $pdf->stream('ticket.pdf');
     }
+    
 
     public function imprimirTicketsDepartamentos()
     {
-
         $tickets = DB::table('tickets')
         ->join('usuarios', 'tickets.ID_Usuario', '=', 'usuarios.ID_Usuario')
         ->join('departamentos', 'usuarios.departamento', '=', 'departamentos.iddepartamentos')
         ->orderBy('usuarios.departamento')
         ->get();
-
-
+    
         // Renderizar la vista del ticket en HTML
         $html = view('PDF.reporteTicketsDepartamento', compact('tickets'))->render();
-
+    
         // Generar el PDF con Dompdf
         $pdf = PDF::loadHTML($html);
-
+        
+        // Configurar el tamaño del papel y la orientación
+        $pdf->setPaper('A4', 'landscape');  // Ajusta a formato A4 en orientación horizontal
+    
         // Opción para descargar el PDF
         return $pdf->download('ticket.pdf');
-
+    
         // Opción para mostrar el PDF en el navegador
         return $pdf->stream('ticket.pdf');
     }
-
+    
     public function imprimirTicketsFecha(Request $request)
     {
         $fechaInicio = $request->input('fechaInicio');

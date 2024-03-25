@@ -18,8 +18,9 @@
         }
 
         table {
-            width: 100%;
+            width: auto;
             border-collapse: collapse;
+            scale:0.8;
         }
 
         table th,
@@ -40,40 +41,37 @@
 </head>
 
 <body>
+@foreach ($tickets->groupBy('nombre_auxiliar') as $nombre_auxiliar => $ticketsPorNombreAuxiliar)
+    <h2>{{ $nombre_auxiliar }}</h2>
     <h1>Reporte de Tickets</h1>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Detalles</th>
-                <th>Clasificación</th>
-                <th>Nombre del Usuario</th>
+                <th>No. Ticket</th>
+                <th>Autor</th>
                 <th>Departamento</th>
-                <th>Auxiliar de Soporte</th>
                 <th>Fecha</th>
+                <th>Clasificación</th>
+                <th>Detalles</th>
                 <th>Estatus</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($tickets as $ticket)
+            @foreach ($ticketsPorNombreAuxiliar as $ticket)
                 <tr>
                     <td>{{ $ticket->ID_tickets }}</td>
-                    <td>{{ $ticket->Detalles }}</td>
-                    <td>{{ $ticket->Clasificacion }}</td>
-                    <td>{{ $ticket->Autor }}</td>
-                    <td>{{ $ticket->departamento }}</td>
-                    <td>
-                        @if ($ticket->auxiliar_Soporte == null)
-                            Sin asignar
-                        @endif
-                        {{ $ticket->auxiliarSoporte }}
-                    </td>
+                    <td>{{ $ticket->nombre_usuario }}</td>
+                    <td>{{ $ticket->departamento_usuario }}</td>
                     <td>{{ $ticket->fecha }}</td>
+                    <td>{{ $ticket->Clasificacion }}</td>
+                    <td>{{ $ticket->Detalles }}</td>
                     <td>{{ $ticket->estatus }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+@endforeach
 </body>
+
 
 </html>
