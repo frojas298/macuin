@@ -16,12 +16,12 @@ class JefeController extends Controller
         
         // Obtener el conteo de tickets no asignados
         $ticketsNoAsignados = DB::table('vistatickets')
-                                 ->whereNull('auxiliarSoporte')
+                                 ->where('estatus', 'En Proceso')
                                  ->count();
         
         // Obtener el conteo de tickets asignados
         $ticketsAsignados = DB::table('vistatickets')
-                              ->whereNotNull('auxiliarSoporte')
+                              ->where('estatus', 'Asignado')
                               ->count();
 
         // Obtener el conteo de tickets finalizadoos
