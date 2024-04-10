@@ -50,6 +50,9 @@ Route::middleware(['auth', 'checkrole:Auxiliar'])->group(function () {
     Route::post('ticketAux/{ID_tickets}/actualizarEstatus', [TicketController::class, 'actualizarEstatus'])->name('ticketAux.actualizarEstatus');
     Route::get('/changePasswordA', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraAux');
     Route::post('/changePasswordA', [CambiarContrasenaController::class, 'store'])->name('cambiarContraAux');
+    Route::get('/imprimirTicketsDepartamentos', [AuxiliarController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
+    Route::get('/imprimirTicketsAuxiliar', [AuxiliarController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
+    Route::post('/imprimirTicketsFecha', [AuxiliarController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {

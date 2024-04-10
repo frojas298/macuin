@@ -61,7 +61,7 @@ class TicketController extends Controller
                 $fechaFinAjustada = new Carbon($request->fecha_fin);
                 $fechaFinAjustada->setTime(23, 59, 59);
                 $query->where('fecha', '<=', $fechaFinAjustada);
-            }
+            } // ESTABLECER QUE LA FECHA FINAL SE VA A TOMAR  EN CUENTA HASTA LAS 23:59:59
 
             $userId = Auth::id();
 
