@@ -39,6 +39,7 @@
     </style>
 </head>
 <body>
+    <h1> {{$idAuxiliar}} </h1>
     @foreach ($tickets->groupBy('departamento') as $departamento => $ticketsPorDepartamento)
         <h2>{{ $departamento }}</h2>
         <table>

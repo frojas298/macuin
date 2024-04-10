@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JefeController;
+use App\Http\Controllers\AuxiliarController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
@@ -41,6 +42,17 @@ Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::get('/imprimirTicketsDepartamentos', [JefeController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
     Route::get('/imprimirTicketsAuxiliar', [JefeController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
     Route::post('/imprimirTicketsFecha', [JefeController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
+});
+
+Route::middleware(['auth', 'checkrole:Auxiliar'])->group(function () {
+    Route::resource('auxiliar', AuxiliarController::class);
+    Route::resource('ticketAux', TicketController::class);
+    Route::post('ticketAux/{ID_tickets}/actualizarEstatus', [TicketController::class, 'actualizarEstatus'])->name('ticketAux.actualizarEstatus');
+    Route::get('/changePasswordA', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraAux');
+    Route::post('/changePasswordA', [CambiarContrasenaController::class, 'store'])->name('cambiarContraAux');
+    Route::get('/imprimirTicketsDepartamentos', [AuxiliarController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
+    Route::get('/imprimirTicketsAuxiliar', [AuxiliarController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
+    Route::post('/imprimirTicketsFecha', [AuxiliarController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {

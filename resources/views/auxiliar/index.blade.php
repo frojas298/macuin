@@ -1,4 +1,4 @@
-@extends('layouts.appJefe')
+@extends('layouts.appAux')
 
 @section('content')
 @if(session('success'))
@@ -63,20 +63,6 @@
     <h3><b>Dashboard</b></h3>
   </div>
   <div class="card-body d-flex flex-wrap">
-    
-    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
-      <div class="row g-0">
-        <div class="col-md-4 d-flex justify-content-center">
-          <img src="{{ asset('images/ticketNoAsignado.png') }}" class="img-fluid rounded-start" alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-title">Tickets No Asignados</h4>
-            <p class="card-text"><b>{{ $ticketsNoAsignados }}</b></p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
@@ -109,68 +95,23 @@
     <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
-          <img src="{{ asset('images/numUsuarios.png') }}" class="img-fluid rounded-start" alt="...">
+          <img src="{{ asset('images/ticketNS.png') }}" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h4 class="card-title">Usuarios</h4>
-            <p class="card-text"><b>{{ $usuarios }}</b></p>
+            <h4 class="card-title">Tickets No Solucionados</h4>
+            <p class="card-text"><b>{{ $ticketsNS }}</b></p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+    <!-- CORREGIR REPORTES PARA AUXILIAR -->
+    <div href="{{ route('imprimirTicketsFecha') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
-          <img src="{{ asset('images/departamento.png') }}" class="img-fluid rounded-start" alt="...">
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-title">Departamentos</h4>
-            <p class="card-text"><b>{{ $departamentos }}</b></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <a href="{{ route('imprimirTickets') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
-      <div class="row g-0">
-        <div class="col-md-4 d-flex justify-content-center">
-          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-title">Imprimir tickets</h4>
-          </div>
-        </div>
-      </div>
-    </a>
-    <a href="{{ route('imprimirTicketsDepartamentos') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
-      <div class="row g-0">
-        <div class="col-md-4 d-flex justify-content-center">
-          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-title">Imprimir tickets por departamentos</h4>
-          </div>
-        </div>
-      </div>
-    </a>
-    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
-      <div class="row g-0">
-        <div class="col-md-4 d-flex justify-content-center">
-          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h4 class="card-title">Imprimir ticket por auxuliar</h4>
-          </div>
-        </div>
-      </div>
-    </a>
-    <form action="{{ route('imprimirTicketsFecha') }}" method="POST" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+        <form action="{{ route('imprimirTicketsFecha') }}" method="POST" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       @csrf
       <div class="row g-0">
           <div class="col-md-4 d-flex justify-content-center">
@@ -185,6 +126,34 @@
   
               <input type="submit" value="Imprimir">
           </div>
+      </div>
+    </form>
+      </div>
+</div>
+    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Imprimir ticket por Auxiliar</h4>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+      <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">Imprimir ticket por Estatus</h4>
+          </div>
+        </div>
+      </div>
+    </a>
       </div>
     </form>
   

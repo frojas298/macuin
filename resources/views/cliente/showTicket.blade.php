@@ -60,7 +60,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
-                        {{ $ticket->estatus != 'En proceso' ? 'disabled' : '' }}
+                        {{ $ticket->estatus != 'En Proceso' ? 'disabled' : '' }}
                             style="background: none; border: none; padding: 0; margin: 0;">
                         <img src="/images/eliminar.png" alt="Cancelar" 
                             style="{{ $ticket->estatus != 'En Proceso' ? 'filter: grayscale(100%);' : '' }}">
