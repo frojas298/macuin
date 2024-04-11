@@ -42,7 +42,7 @@
 
 <body>
 @foreach ($tickets->groupBy('estatus') as $nombre_auxiliar => $ticketsPorNombreAuxiliar)
-    <h2>{{ $ticket->estatus  }}</h2>
+    <h2>{{ $nombre_auxiliar }}</h2>
     <h1>Reporte de Tickets</h1>
     <table>
         <thead>
