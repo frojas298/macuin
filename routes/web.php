@@ -53,6 +53,7 @@ Route::middleware(['auth', 'checkrole:Auxiliar'])->group(function () {
     Route::get('/imprimirTicketsDepartamentos', [AuxiliarController::class, 'imprimirTicketsDepartamentos'])->name('imprimirTicketsDepartamentos');
     Route::get('/imprimirTicketsAuxiliar', [AuxiliarController::class, 'imprimirTicketsAuxiliar'])->name('imprimirTicketsAuxiliar');
     Route::post('/imprimirTicketsFecha', [AuxiliarController::class, 'imprimirTicketsFecha'])->name('imprimirTicketsFecha');
+    Route::get('/imprimirTicketsEstatus', [AuxiliarController::class, 'imprimirTicketsEstatus'])->name('imprimirTicketsEstatus');
 });
 
 Route::middleware(['auth', 'checkrole:Cliente'])->group(function () {

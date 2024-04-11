@@ -142,7 +142,7 @@
         </div>
       </div>
     </a>
-    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+    <a href="{{ route('imprimirTicketsEstatus') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">
