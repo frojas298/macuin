@@ -200,8 +200,8 @@
                                 currentFecha = fecha;
                             }
                             var clase = comentario.ID_Usuario === usuarioAutenticado ? 'out' : 'in';
-                            var avatar = clase === 'in' ? '/images/perfilAuxiliar.png' : '/images/perfilSoporte.png';
-                            comentariosHtml += '<li class="' + clase + '"><div class="chat-img"><img alt="Avatar" src="' + avatar + '"></div><div class="chat-body"><div class="chat-message"><h5>' + comentario.Nombre + ' <small>' + hora + '</small></h5><p>' + comentario.comentario + '</p></div></div></li>';
+                            var avatar = comentario.fotoPerfil;
+                            comentariosHtml += '<li class="' + clase + '"><div class="chat-img"><img alt="Avatar" src="' + avatar + '" class="img-fluid rounded-circle" style="object-fit: cover; width: 40px; height: 40px; border-radius: 50%;"></div><div class="chat-body"><div class="chat-message"><h5>' + comentario.Nombre + ' <small>' + hora + '</small></h5><p>' + comentario.comentario + '</p></div></div></li>';
                         });
 
                         $('.chat-list').html(comentariosHtml + '</ul>');

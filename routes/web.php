@@ -31,6 +31,9 @@ Route::resource('cliente', TicketController::class); */
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/update-photo', [CambiarContrasenaController::class, 'updatePhoto'])->name('updatePhoto');
+// Rutas para comentarios
+Route::get('/comentarios/ticket/{id}', [ComentarioController::class, 'obtenerComentariosPorTicket']);
+Route::post('/comentarios/crear', [ComentarioController::class, 'crearComentario'])->name('comentarios.crear');
 
 
 Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
@@ -39,9 +42,6 @@ Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::post('/tickets/asignar/{ticket}', [TicketController::class, 'asignarAuxiliar'])->name('asignarAuxiliar');
     Route::resource('ticketJefe', TicketController::class);
     Route::resource('perfilJefe', ProfileController::class);
-    // Rutas para comentarios
-    Route::get('/comentarios/ticket/{id}', [ComentarioController::class, 'obtenerComentariosPorTicket']);
-    Route::post('/comentarios/crear', [ComentarioController::class, 'crearComentario'])->name('comentarios.crear');
     Route::get('/changePasswordJ', [CambiarContrasenaController::class, 'index'])->name('vistaCambioContraJefe');
     Route::post('/changePasswordJ', [CambiarContrasenaController::class, 'store'])->name('cambiarContraJefe');
     Route::get('/imprimirTickets', [JefeController::class, 'imprimirTickets'])->name('imprimirTickets');

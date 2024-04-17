@@ -30,7 +30,6 @@
                     <th>Clasificacion</th>
                     <th>Fecha</th>
                     <th>Estatus</th>
-                    <th>Comentarios</th>
                     <th>Asignado</th>
                 </tr>
             </thead>
@@ -43,13 +42,7 @@
                     <td>{{ $ep->Detalles }}</td>
                     <td>{{ $ep->Clasificacion }}</td>
                     <td>{{ $ep->fecha }}</td>
-                    <td><span class="estado en-proceso">{{ $ep->estatus }}</span></td>
-                    <td>
-                        <!-- Boton Modal chat -->
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentModal">
-                            <img src="/images/chat.png" alt="Comentarios">
-                        </button>
-                    </td>        
+                    <td><span class="estado en-proceso">{{ $ep->estatus }}</span></td>   
                     <td>
                         <form action="{{ route('asignarAuxiliar', $ep->ID_tickets) }}" method="POST">
                             @csrf
@@ -94,9 +87,9 @@
                         <td>{{ $ticketA->fecha }}</td>
                         <td><span class="estado asignado">{{ $ticketA->estatus }}</span></td>
                         <td>
-                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#comentModal" data-id="{{ $ticketA->ID_tickets }}">
-                            Ver Chat
-                        </button>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentModal" data-id="{{ $ticketA->ID_tickets }}">
+                                <img src="/images/chat.png" alt="Comentarios">
+                            </button>
                         </td>                  
                         <td>
                             <form action="{{ route('asignarAuxiliar', $ticketA->ID_tickets) }}" method="POST">
@@ -140,7 +133,11 @@
                         <td>{{ $ticketC->Clasificacion }}</td>
                         <td>{{ $ticketC->fecha }}</td>
                         <td><span class="estado completado">{{ $ticketC->estatus }}</span></td>
-                        <td><a href="#"><img src="/images/chat.png" alt="Comentarios"></a></td>
+                        <td>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentModal" data-id="{{ $ticketA->ID_tickets }}">
+                                <img src="/images/chat.png" alt="Comentarios">
+                            </button>
+                        </td> 
                         <td>{{ $ticketC->auxiliarSoporte }}</td>
                     </tr>
                 @endforeach
@@ -173,7 +170,11 @@
                         <td>{{ $ticketNS->Clasificacion }}</td>
                         <td>{{ $ticketNS->fecha }}</td>
                         <td><span class="estado nosolucionado">{{ $ticketNS->estatus }}</span></td>
-                        <td><a href="#"><img src="/images/chat.png" alt="Comentarios"></a></td>
+                        <td>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentModal" data-id="{{ $ticketA->ID_tickets }}">
+                                <img src="/images/chat.png" alt="Comentarios">
+                            </button>
+                        </td> 
                         <td>{{ $ticketNS->auxiliarSoporte }}</td>
                     </tr>
                 @endforeach
@@ -192,7 +193,6 @@
                     <th>Clasificación</th>
                     <th>Fecha</th>
                     <th>Estatus</th>
-                    <th>Comentarios</th>
                     <th>Asignado</th>
                 </tr>
             </thead>
@@ -206,7 +206,6 @@
                         <td>{{ $tCC->Clasificacion }}</td>
                         <td>{{ $tCC->fecha }}</td>
                         <td><span class="estado cancelado">{{ $tCC->estatus }}</span></td>
-                        <td><a href="#"><img src="/images/chat.png" alt="Comentarios"></a></td>
                         <td>{{ $tCC->auxiliarSoporte }}</td>
                     </tr>
                 @endforeach
@@ -219,8 +218,8 @@
 <div class="modal fade" id="comentModal" tabindex="-1" aria-labelledby="comentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="comentModalLabel">Chat</h5>
+            <div class="modal-header cardHeaderForm">
+                <h5 class="modal-title" id="comentModalLabel">Comentarios</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
@@ -229,12 +228,10 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <input type="text" class="form-control" id="mensajeInput" placeholder="Escribe un mensaje...">
+                <input type="text" class="form-control custom-input" id="mensajeInput" placeholder="Escribe un mensaje..." required style="flex: 1; margin-right: 10px;">
                 <button type="button" class="btn btn-primary" id="enviarMensaje">Enviar</button>
             </div>
         </div>
     </div>
 </div>
-
-
 @endsection
