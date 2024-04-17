@@ -67,7 +67,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
                                     <!--<a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>-->
-                                    <a class="dropdown-item" href="{{ route('vistaCambioContraAux') }}">Cambiar contraseña</a>
+                                    <a class="dropdown-item" href="{{ route('vistaCambioContraAux') }}">Editar Perfil</a>
                                 </div>
                             </li>
 

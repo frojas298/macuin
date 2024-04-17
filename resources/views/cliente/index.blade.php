@@ -10,8 +10,7 @@
 <div class="cardPerfil card">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="{{ asset('images/perfilDefault.png') }}" class="img-fluid rounded-start" alt="...">
-    </div>
+    <img src="{{ Auth::user()->fotoPerfil }}" class="img-fluid rounded-circle" alt="Foto de perfil" style="object-fit: cover; width: 240px; height: 240px; border-radius: 50%;">    </div>
     <div class="col-md-8">
       <div class="card-body">
         <h1 class="card-title"><b>Bienvenido(a)</b></h1>

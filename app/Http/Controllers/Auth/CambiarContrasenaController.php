@@ -50,5 +50,22 @@ class CambiarContrasenaController extends Controller
         }elseif (auth()->user()->Rol === 'Cliente') {
             return redirect('/cliente')->with('success', 'Ha cambiado su contraseña correctamente');
         }
-    }    
+    }
+    
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'profilePhoto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $fileName = time().'.'.$request->profilePhoto->extension();  
+        $request->profilePhoto->move(public_path('images'), $fileName);
+
+        // Actualizar la ruta en la base de datos
+        $user = Auth::user();
+        $user->fotoPerfil = '/images/' . $fileName;
+        $user->save();
+
+        return back()->with('success','Has actualizado tu foto de perfil.');
+    }
 }
