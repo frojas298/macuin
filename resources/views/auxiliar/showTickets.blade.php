@@ -40,6 +40,7 @@
             @endforeach
         @endif
     </div>
+
     <table class="table text-center table-dark table-striped" border="1">
         <thead>
             <tr>
@@ -90,7 +91,7 @@
                     @endif
                 </td>
                 <td>{{ $ticket->auxiliarSoporte }}</td>
-                <<td>
+                <td>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentClienteModal" data-id="{{ $ticket->ID_tickets }}">
                         <img src="/images/chatCliente.png" alt="ComentariosCliente">
                     </button>

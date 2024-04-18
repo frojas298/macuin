@@ -8,6 +8,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\Auth\CambiarContrasenaController;
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::post('/comentarios/crear', [ComentarioController::class, 'crearComentario
 Route::middleware(['auth', 'checkrole:Jefe'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('jefe', JefeController::class);
+    Route::resource('departamento', DepartamentoController::class);
     Route::post('/tickets/asignar/{ticket}', [TicketController::class, 'asignarAuxiliar'])->name('asignarAuxiliar');
     Route::resource('ticketJefe', TicketController::class);
     Route::resource('perfilJefe', ProfileController::class);

@@ -72,6 +72,17 @@
             </div>
         </li>
 
+        <!-- Departamentos Dropdown -->
+        <li class="nav-item dropdown">
+            <a id="departDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Departamentos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="departDropdown">
+                <a class="dropdown-item" href="{{ url('/departamento/create') }}">{{ __('Crear') }}</a>
+                <a class="dropdown-item" onclick="showSpinners()" href="{{ url('/departamento') }}">Consultar</a>
+            </div>
+        </li>
+
         <!-- Administrar Perfil Dropdown -->
         <li class="nav-item dropdown">
             <a id="profileManagementDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

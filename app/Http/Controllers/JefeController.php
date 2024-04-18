@@ -35,6 +35,7 @@ class JefeController extends Controller
 
         // Obtener el conteo de usuarios
         $departamentos = DB::table('departamentos')
+                    ->where('estado','Activo')
                     ->count();
 
 
