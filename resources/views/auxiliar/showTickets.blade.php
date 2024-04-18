@@ -91,7 +91,14 @@
                     @endif
                 </td>
                 <td>{{ $ticket->auxiliarSoporte }}</td>
-                <td>Comentarios</td>
+                <td>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentClienteModal" data-id="{{ $ticket->ID_tickets }}">
+                        <img src="/images/chatCliente.png" alt="ComentariosCliente">
+                    </button>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#comentJefeModal" data-id="{{ $ticket->ID_tickets }}">
+                        <img src="/images/chatJefe.png" alt="ComentariosJefe">
+                    </button>
+                </td>        
             </tr>
             @endforeach
         </tbody>
@@ -216,6 +223,44 @@
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para comentarios con el Jefe -->
+<div class="modal fade" id="comentJefeModal" tabindex="-1" aria-labelledby="comentJefeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header cardHeaderForm">
+                <h5 class="modal-title" id="comentJefeModalLabel">Comentarios con el Jefe</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
+                <ul class="chat-list-jefe"></ul>
+            </div>
+            <div class="modal-footer">
+                <input type="text" class="form-control custom-input" id="mensajeInputJefe" placeholder="Escribe un mensaje..." required style="flex: 1; margin-right: 10px;">
+                <button type="button" class="btn btn-primary" id="enviarMensajeJefe">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para comentarios con el Cliente -->
+<div class="modal fade" id="comentClienteModal" tabindex="-1" aria-labelledby="comentClienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header cardHeaderForm">
+                <h5 class="modal-title" id="comentClienteModalLabel">Comentarios con el Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
+                <ul class="chat-list-cliente"></ul>
+            </div>
+            <div class="modal-footer">
+                <input type="text" class="form-control custom-input" id="mensajeInputCliente" placeholder="Escribe un mensaje..." required style="flex: 1; margin-right: 10px;">
+                <button type="button" class="btn btn-primary" id="enviarMensajeCliente">Enviar</button>
+            </div>
         </div>
     </div>
 </div>

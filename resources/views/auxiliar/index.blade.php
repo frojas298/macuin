@@ -10,7 +10,7 @@
 <div class="cardPerfil card">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="{{ asset('images/perfilDefault.png') }}" class="img-fluid rounded-start" alt="...">
+      <img src="{{ Auth::user()->fotoPerfil }}" class="img-fluid rounded-circle" alt="Foto de perfil" style="object-fit: cover; width: 240px; height: 240px; border-radius: 50%;">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -142,7 +142,7 @@
         </div>
       </div>
     </a>
-    <a href="{{ route('imprimirTicketsAuxiliar') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
+    <a href="{{ route('imprimirTicketsEstatus') }}" class="card mb-3 me-2 cardElement" style="max-width: 220px; flex-grow:1;">
       <div class="row g-0">
         <div class="col-md-4 d-flex justify-content-center">
           <img style="height: 80px; width: 80px" src="{{ asset('images/ticketImprimir.png') }}" class="img-fluid rounded-start " alt="...">

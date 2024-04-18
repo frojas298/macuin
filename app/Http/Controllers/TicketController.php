@@ -66,9 +66,7 @@ class TicketController extends Controller
             $userId = Auth::id();
 
             $query->where(function($query) use ($userId) {
-                $query->where(function($query) {
-                    $query->whereIn('estatus', ['En Proceso', 'Cancelado']);
-                })->orWhere(function($query) use ($userId) {
+                $query->where(function($query) use ($userId) {
                     $query->whereIn('estatus', ['Asignado', 'No Solucionado', 'Completado'])
                         ->where('ID_Auxiliar', $userId);
                 });

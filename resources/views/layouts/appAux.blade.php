@@ -17,10 +17,14 @@
     <link href="{{ asset('css/jefe/showTickets.css') }}" rel="stylesheet">
     <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
     <link href="{{ asset('css/auxiliar/filtro.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/chat.css') }}" rel="stylesheet">
+
 
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -67,7 +71,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
                                     <!--<a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>-->
-                                    <a class="dropdown-item" href="{{ route('vistaCambioContraAux') }}">Cambiar contraseña</a>
+                                    <a class="dropdown-item" href="{{ route('vistaCambioContraAux') }}">Editar Perfil</a>
                                 </div>
                             </li>
 
@@ -127,5 +131,84 @@
             document.getElementById('spinnerContainer').style.display = 'block';
         }
     </script>
+
+    <script>
+        $(document).ready(function() {
+            var idTicketGlobal; // Variable global para mantener el ID del ticket
+
+            $('#comentJefeModal, #comentClienteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                idTicketGlobal = button.data('id'); // Guarda el ID del ticket globalmente
+                var modalType = $(this).attr('id') === 'comentJefeModal' ? 'Jefe' : 'Cliente';
+                cargarComentarios(idTicketGlobal, modalType);
+            });
+
+            // Eventos para enviar mensaje al hacer clic en el botón o al presionar ENTER
+            $('#enviarMensajeJefe, #enviarMensajeCliente').click(function() {
+                var tipo = this.id.includes('Jefe') ? 'Jefe' : 'Cliente';
+                enviarMensaje(tipo);
+            });
+
+            $('#mensajeInputJefe, #mensajeInputCliente').keypress(function(e) {
+                if (e.which == 13) {
+                    var tipo = this.id.includes('Jefe') ? 'Jefe' : 'Cliente';
+                    enviarMensaje(tipo);
+                    e.preventDefault();
+                }
+            });
+
+            function enviarMensaje(tipo) {
+                var inputId = tipo === 'Jefe' ? '#mensajeInputJefe' : '#mensajeInputCliente';
+                var mensaje = $(inputId).val();
+                if (mensaje.trim() != "") {
+                    $.ajax({
+                        url: '/comentarios/crear',
+                        type: 'POST',
+                        data: {
+                            ID_tickets: idTicketGlobal,
+                            comentario: mensaje,
+                            destinatario: tipo === 'Jefe' ? 'jefe-aux' : 'aux-cliente',
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function() {
+                            $(inputId).val(''); // Limpiar el campo de entrada
+                            cargarComentarios(idTicketGlobal, tipo); // Recargar los comentarios
+                        }
+                    });
+                }
+            }
+
+            function cargarComentarios(idTicket, tipo) {
+                $.ajax({
+                    url: '/comentarios/ticket/' + idTicket,
+                    type: 'GET',
+                    success: function(response) {
+                        var comentarios = tipo === 'Jefe' ? response.comentariosJefe : response.comentariosCliente;
+                        var usuarioAutenticado = response.usuarioAutenticado;
+                        var comentariosHtml = '';
+                        var currentFecha = null;
+
+                        comentarios.forEach(function(comentario) {
+                            var fecha = comentario.fecha_hora.substr(0, 10);
+                            var hora = comentario.fecha_hora.substr(11);
+                            if (fecha !== currentFecha) {
+                                if (currentFecha !== null) comentariosHtml += '</ul>';
+                                comentariosHtml += '<div class="chat-date">' + fecha + '</div><ul class="chat-list">';
+                                currentFecha = fecha;
+                            }
+                            var clase = comentario.ID_Usuario === usuarioAutenticado ? 'out' : 'in';
+                            var avatar = comentario.fotoPerfil;
+                            comentariosHtml += '<li class="' + clase + '"><div class="chat-img"><img alt="Avatar" src="' + avatar + '" class="img-fluid rounded-circle" style="object-fit: cover; width: 40px; height: 40px; border-radius: 50%;"></div><div class="chat-body"><div class="chat-message"><h5>' + comentario.Nombre + ' <small>' + hora + '</small></h5><p>' + comentario.comentario + '</p></div></div></li>';
+                        });
+
+                        var modalBodySelector = tipo === 'Jefe' ? '#comentJefeModal .modal-body' : '#comentClienteModal .modal-body';
+                        $(modalBodySelector).html(comentariosHtml + '</ul>');
+                    }
+                });
+            }
+        });
+    </script>
+
+
 </body>
 </html>

@@ -13,13 +13,15 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/jefe/index.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/cliente/showUsers.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jefe/showTickets.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cliente/showTickets.css') }}" rel="stylesheet">
     <link href="{{ asset('css/forms.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/chat.css') }}" rel="stylesheet">
 
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -72,7 +74,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="profileManagementDropdown">
                 <!--<a class="dropdown-item" href="{{ url('/perfilCliente') }}">Modificar datos</a>-->
-                <a class="dropdown-item" href="{{ route('vistaCambioContra') }}">Cambiar contraseña</a>
+                <a class="dropdown-item" href="{{ route('vistaCambioContra') }}">Editar Perfil</a>
             </div>
         </li>
 
@@ -131,6 +133,79 @@
         function showSpinners() {
             document.getElementById('spinnerContainer').style.display = 'block';
         }
+    </script>
+
+<script>
+        $(document).ready(function() {
+            var idTicketGlobal; // Variable global para mantener el ID del ticket
+
+            $('#comentModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                idTicketGlobal = button.data('id'); // Guarda el ID del ticket globalmente
+
+                cargarComentarios(idTicketGlobal);
+            });
+
+            // Evento para enviar mensaje al hacer clic en el botón
+            $('#enviarMensaje').click(function() {
+                enviarMensaje();
+            });
+
+            // Evento para enviar mensaje al presionar la tecla ENTER
+            $('#mensajeInput').keypress(function(e) {
+                if (e.which == 13) { // 13 = código de la tecla ENTER
+                    enviarMensaje();
+                    e.preventDefault(); // Evitar el comportamiento por defecto del formulario (Esto podría recargar la página)
+                }
+            });
+
+            function enviarMensaje() {
+                var mensaje = $('#mensajeInput').val();
+                if (mensaje.trim() != "") {
+                    $.ajax({
+                        url: '/comentarios/crear',
+                        type: 'POST',
+                        data: {
+                            ID_tickets: idTicketGlobal,
+                            comentario: mensaje,
+                            _token: "{{ csrf_token() }}" 
+                        },
+                        success: function() {
+                            $('#mensajeInput').val(''); // Limpiar el campo de entrada
+                            cargarComentarios(idTicketGlobal); // Recargar los comentarios
+                        }
+                    });
+                }
+            }
+
+            function cargarComentarios(idTicket) {
+                $.ajax({
+                    url: '/comentarios/ticket/' + idTicket,
+                    type: 'GET',
+                    success: function(response) {
+                        var comentarios = response.comentarios;
+                        var usuarioAutenticado = response.usuarioAutenticado;
+                        var comentariosHtml = '';
+                        var currentFecha = null;
+
+                        comentarios.forEach(function(comentario) {
+                            var fecha = comentario.fecha_hora.substr(0, 10);
+                            var hora = comentario.fecha_hora.substr(11);
+                            if (fecha !== currentFecha) {
+                                if (currentFecha !== null) comentariosHtml += '</ul>';
+                                comentariosHtml += '<div class="chat-date">' + fecha + '</div><ul>';
+                                currentFecha = fecha;
+                            }
+                            var clase = comentario.ID_Usuario === usuarioAutenticado ? 'out' : 'in';
+                            var avatar = comentario.fotoPerfil;
+                            comentariosHtml += '<li class="' + clase + '"><div class="chat-img"><img alt="Avatar" src="' + avatar + '" class="img-fluid rounded-circle" style="object-fit: cover; width: 40px; height: 40px; border-radius: 50%;"></div><div class="chat-body"><div class="chat-message"><h5>' + comentario.Nombre + ' <small>' + hora + '</small></h5><p>' + comentario.comentario + '</p></div></div></li>';
+                        });
+
+                        $('.chat-list').html(comentariosHtml + '</ul>');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
